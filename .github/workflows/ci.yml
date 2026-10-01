@@ -1,0 +1,32 @@
+name: Shell checks
+
+on:
+  push:
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Check Bash syntax
+        run: bash -n vless-reality-oneclick.sh
+
+      - name: Install ShellCheck
+        run: sudo apt-get update && sudo apt-get install -y shellcheck
+
+      - name: Run ShellCheck
+        run: shellcheck vless-reality-oneclick.sh
+
+      - name: Check version consistency
+        run: |
+          version="$(cat VERSION)"
+          grep -Fq "SCRIPT_VERSION=\"${version}\"" vless-reality-oneclick.sh
+
+      - name: Verify checksum
+        run: sha256sum --check SHA256SUMS

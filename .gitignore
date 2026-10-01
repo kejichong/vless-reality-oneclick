@@ -1,0 +1,12 @@
+# Generated credentials and client links must never be committed.
+vless-reality-secrets.env
+vless-reality-client.txt
+*.backup.*
+*.log
+
+# Local editor and operating-system files.
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+
